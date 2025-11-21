@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
 	const publicRoutes = ["/login", "/signup"];
 	const pathname = request.nextUrl.pathname;
 	const redirectTo = request.nextUrl.searchParams.get("redirectTo") || "/";
@@ -25,8 +25,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-	runtime: "nodejs",
-	matcher: [
+    // Apply middleware to specific routes
+    matcher: [
 		"/",
 		"/products",
 		"/products/:path*",
@@ -36,5 +36,5 @@ export const config = {
 		"/checkout",
 		"/login",
 		"/signup",
-	], // Apply middleware to specific routes
+	]
 };
